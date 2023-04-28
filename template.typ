@@ -51,7 +51,7 @@
 }
 
 #let followMe(name, services) = {
-  [=#name \ ]
+  [= #name \ ]
 
   set text(10pt)
   let icon = icon.with(shift: 3pt)
@@ -94,7 +94,6 @@
 }
 
 
-
 #let profile(photo: "", name: "", services:(), talents: ()) = {
   set text(12pt, weight: "bold")
 
@@ -103,7 +102,7 @@
     gutter: 50pt,
     image(photo, width: 295pt / 4, height: 413pt / 4),
     followMe(name, services),
-    // skill(talents: talents)
+    skill(talents: talents)
   )
 }
 
@@ -123,7 +122,7 @@
 
   profile(
     photo: "SpongeBob SquarePants.png",
-    name : "SpongeBob SquarePants",
+    name : "gvariable",
     services: (
       (name: "github.svg", link: "https://github.com/gvariable", display: "github/gvariable"),
       (name: "wechat.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
@@ -133,6 +132,7 @@
       ("Python", 0.66),
       ("Rust", 0.73),
       ("C++", 0.85),
+      ("Linux", 0.43),
     )
   )
 
