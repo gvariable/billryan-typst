@@ -5,8 +5,8 @@
     name: "gvariable",
     services: (
         (name: "github.svg", link: "https://github.com/gvariable", display: "github/gvariable"),
-        (name: "mail.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
-        (name: "iphone.svg", display: "(+86)13xxxxxxxx"),
+        (name: "envelope.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
+        (name: "iphone.svg", display: "(+86)130-1111-4514"),
         (name: "linkedin.svg", link: "http://linkedin.cn/", display: "linkedin/gvariable"),
     ),
     talents: (

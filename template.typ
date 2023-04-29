@@ -151,16 +151,11 @@
 
 #let term(period, postion) = {
   
-  // set text(9pt)
-  // h(1fr)
-  // date(period)
-  // h(10pt)
-  // location(postion)
-  box[
-      #date(period)
-      #h(10pt)
-      #location(postion)
-  ]
+  set text(9pt)
+  h(1fr)
+  date(period)
+  h(10pt)
+  location(postion)
 
 }
 
@@ -204,7 +199,7 @@
     let rect = rect.with(stroke: rgb("#B3FFFF"))
     box(
       height: bounding_box_height,
-      rect(inset: (y: 1pt), outset: (y: 2pt))[#underline(it.body)]
+      rect(inset: (y: 1pt), outset: (y: 2pt))[#underline(it)]
     )
   }
 
