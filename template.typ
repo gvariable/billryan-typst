@@ -1,11 +1,15 @@
 #let photo_scale = 5;
 #let photo_width = 295pt / photo_scale;
 #let photo_height = 413pt / photo_scale;
-#let bounding_box_height = 10pt;
+#let bounding_box_height = 1.1em;
 #let box_shift = 1.5pt;
 #let image_path = "images/";
+#let body_text_font = "IBM Plex Sans";
+#let body_text_size = 10pt;
 
-#set document(title: "CV template", author: "gvariable")
+
+// document meta data
+#set document(title: "resume template", author: "gvariable")
 
 #let progressbar(rating, width: 120pt, height: 12pt, bar_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
     let radius = height / 2;
@@ -45,8 +49,7 @@
 }
 
 
-
-#let icon(name, shift: 1.5pt, height: 15pt) = {
+#let icon(name, shift: 1.5pt, height: bounding_box_height) = {
   box(
     baseline: shift,
     height: height,
@@ -55,11 +58,12 @@
   h(3pt)
 }
 
-#let followMeAndSkill(name, services, talents) = {
-  set text(10pt)
-  let icon = icon.with(shift: -1pt, height: bounding_box_height)
-  let progressbar = progressbar.with(width: bounding_box_height * 15, height: bounding_box_height)
+#let meta(name, services, talents) = {
 
+  set text(10pt)
+  let icon = icon.with(shift: -1pt)
+  let progressbar = progressbar.with(width: bounding_box_height * 15, height: bounding_box_height)
+  // skills
   let talent(name, rating) = {
     align(right)[#name #h(3pt) #box(baseline: 1.5pt, progressbar(rating))]
   }
@@ -69,14 +73,14 @@
                       .map(
                         val => {talent(val.at(0), val.at(1))}
                       ).join([ \ ]);
-
+  // medias
   let services = services.map(service => {    
       icon(service.name)
       if "display" in service.keys() {
         if "link" in service.keys() {
           link(service.link)[#service.display]
         }else{
-          [#service.display]
+          box(baseline: -3pt)[#service.display]
         }
       }else{
         link(service.link)    
@@ -95,67 +99,26 @@
 
 }
 
-#let followMe(name, services) = {
-  [= #name \ ]
-
-  set text(10pt)
-  let icon = icon.with(shift: -1pt, height: bounding_box_height)
-
-  services.map(service => {    
-      icon(service.name)
-      if "display" in service.keys() {
-        if "link" in service.keys() {
-          link(service.link)[#service.display]
-        }else{
-          [#service.display]
-        }
-      }else{
-        link(service.link)    
-      }
-    }
-  ).join([ \ ])
-}
-
-#let skill(talents: ()) = {
-  let talent(name, rating) = {
-    grid(
-      columns: (1fr, auto),
-      column-gutter: 5pt,
-      align(right)[#name],
-      align(left)[#box(progressbar(rating, height: bounding_box_height))]
-    )
-  }
-
-  [
-    #linebreak()
-    #linebreak()
-    #{talents.sorted(key: val => val.at(1))
-          .rev()
-          .map(
-            val => {talent(val.at(0), val.at(1))}
-          ).join([ \ ])
-    }
-  ]
-}
-
 #let date(period) = {
-  icon("calendar.svg", height: 10pt) 
+
+  icon("calendar.svg") 
   period
+  
 }
 
 #let location(loc) = {
-  icon("location.svg", height: 10pt)
+  icon("location.svg")
   loc
 }
 
-
 #let term(period, postion) = {
-  
-  set text(9pt)
-  h(1fr)
-  date(period)
-  h(10pt)
-  location(postion)
+
+  box(width: 1fr)[
+    #align(right)[
+      #date(period)
+      #h(1em)
+      #location(postion)]
+  ]
 
 }
 
@@ -167,16 +130,18 @@
     columns: (photo_width, auto),
     column-gutter: 10pt,
     image(photo, width: photo_width, height: photo_height),
-    followMeAndSkill(name, services, talents)
+    meta(name, services, talents)
   )
 
 }
 
 #let conf(photo: "", name : "", services: (), talents: (), tagline:[],  body: []) = {
-  set text(9.8pt, font: "IBM Plex Sans")
+  set text(body_text_size, font: body_text_font)
   set page(
-    margin: (x: 54pt, y: 52pt),
+    margin: (x: 5em, y: 4em),
   )
+
+  set align(left + top)
 
   show "Brief Introduction": it => {
     [*#it*]
@@ -210,5 +175,10 @@
     talents: talents
   )
   
-  body
+  [
+    #v(1em)
+    tags: #tagline
+    \
+    #body
+  ]
 }
