@@ -1,10 +1,12 @@
 #let photo_scale = 5;
 #let photo_width = 295pt / photo_scale;
 #let photo_height = 413pt / photo_scale;
+#let bounding_box_height = 10pt;
+#let box_shift = 1.5pt;
 
 #set document(title: "CV template", author: "gvariable")
 
-#let progressbar(rating, width: 100pt, height: 10pt, bar_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
+#let progressbar(rating, width: 120pt, height: 12pt, bar_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
     let radius = height / 2;
     let progress_width = width * rating;
     let bg_width = width * (1 - rating);
@@ -52,18 +54,51 @@
   h(3pt)
 }
 
+#let followMeAndSkill(name, services, talents) = {
+  set text(10pt)
+  let icon = icon.with(shift: -1pt, height: bounding_box_height)
+  let progressbar = progressbar.with(width: bounding_box_height * 15, height: bounding_box_height)
+
+  let talent(name, rating) = {
+    align(right)[#name #h(3pt) #box(baseline: 1.5pt, progressbar(rating))]
+  }
+
+  let talents = talents.sorted(key: val => val.at(1))
+                      .rev()
+                      .map(
+                        val => {talent(val.at(0), val.at(1))}
+                      ).join([ \ ]);
+
+  let services = services.map(service => {    
+      icon(service.name)
+      if "display" in service.keys() {
+        if "link" in service.keys() {
+          link(service.link)[#service.display]
+        }else{
+          [#service.display]
+        }
+      }else{
+        link(service.link)    
+      }
+    }
+  ).join([ \ ])
+
+  align(left)[= #name \ ]
+
+  grid(
+    columns: (1fr, 1.5fr, 0.3fr),
+    gutter: 15pt,
+    services,
+    talents
+  )
+
+}
+
 #let followMe(name, services) = {
   [= #name \ ]
 
   set text(10pt)
-  let icon = icon.with(shift: -1pt, height: 12pt)
-
-  show link: it => {
-    let rect = rect.with(stroke: rgb("#B3FFFF"))
-    box(
-      rect[#it.body]
-    )
-  }
+  let icon = icon.with(shift: -1pt, height: bounding_box_height)
 
   services.map(service => {    
       icon(service.name)
@@ -86,13 +121,13 @@
       columns: (1fr, auto),
       column-gutter: 5pt,
       align(right)[#name],
-      align(left)[#box(progressbar(rating))]
+      align(left)[#box(progressbar(rating, height: bounding_box_height))]
     )
   }
 
   [
     #linebreak()
-    #set block(spacing: 0.5pt)
+    #linebreak()
     #{talents.sorted(key: val => val.at(1))
           .rev()
           .map(
@@ -115,27 +150,36 @@
 
 #let term(period, postion) = {
   
-  set text(9pt)
-  h(1fr)
-  date(period)
-  h(10pt)
-  location(postion)
+  // set text(9pt)
+  // h(1fr)
+  // date(period)
+  // h(10pt)
+  // location(postion)
+  box[
+    #align(right)[
+      
+        #date(period)
+        #h(10pt)
+        #location(postion)
+    ]
+  ]
 
 }
 
 #let profile(photo: "", name: "", services:(), talents: ()) = {
-  set text(12pt, weight: "bold")
+  set text(12pt, weight: "medium")
+  set block(spacing: 1pt)
 
   grid(
-    columns: (0.2fr, 0.39fr, 0.39fr),
-    gutter: 50pt,
-    image(photo, width: 295pt / 4, height: 413pt / 4),
-    followMe(name, services),
-    align(right)[#skill(talents: talents)]
+    columns: (photo_width, auto),
+    column-gutter: 10pt,
+    image(photo, width: photo_width, height: photo_height),
+    followMeAndSkill(name, services, talents)
   )
+
 }
 
-#let entry() = {
+#let project() = {
   set text(9.8pt, font: "IBM Plex Sans")
   set page(
     margin: (x: 54pt, y: 52pt),
@@ -154,18 +198,26 @@
     #set text(12pt, font: "Inria Serif")
     #set align(left)
     #emph(it.body)
-    #v(-7pt)
+    #v(-10pt)
     #line(length: 100%)
   ]
+
+  show link: it => {
+    let rect = rect.with(stroke: rgb("#B3FFFF"))
+    box(
+      height: bounding_box_height,
+      rect(inset: (y: 1pt), outset: (y: 2pt))[#underline(it.body)]
+    )
+  }
 
   profile(
     photo: "SpongeBob SquarePants.png",
     name : "gvariable",
     services: (
       (name: "github.svg", link: "https://github.com/gvariable", display: "github/gvariable"),
-      (name: "wechat.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
+      (name: "mail.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
       (name: "iphone.svg", display: "(+86)13xxxxxxxx"),
-      (name: "linkedin.svg", link: "http://linkedin.cn/", display: "linkedin/gvariable")
+      (name: "linkedin.svg", link: "http://linkedin.cn/", display: "linkedin/gvariable"),
     ),
     talents: (
       ("Python", 0.66),
@@ -203,4 +255,4 @@
   ]
 }
 
-#entry()
+#project()
