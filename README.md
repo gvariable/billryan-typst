@@ -5,7 +5,7 @@ Here is a very simple and minimalist resume template, inspired by
 
 ## Showcase
 Here is a screenshot of the resume.
-<img src="demo.png" width=70% height=70% />
+<img src="demo.png" width=70% height=70% />.  
 see [`demo.pdf`](demo.pdf) for the pdf version.
 ## Features
 - Beginner-friendly with the power of [markup-based typesetting system](https://typst.app/docs/reference/syntax/).
