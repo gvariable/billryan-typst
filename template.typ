@@ -5,7 +5,7 @@
 #let photo_height = 413pt / photo_scale;
 #let bounding_box_height = 1.1em;
 #let box_shift = 1.5pt;
-#let image_path = "images/";
+#let image_path = "assets/";
 #let font = ("IBM Plex Serif", "Times New Roman");
 #let font_size = 10pt;
 
