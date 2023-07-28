@@ -6,7 +6,7 @@
 #let bounding_box_height = 1.1em;
 #let box_shift = 1.5pt;
 #let image_path = "images/";
-#let font = "Times New Roman";
+#let font = ("IBM Plex Serif", "Times New Roman");
 #let font_size = 10pt;
 
 
@@ -137,7 +137,7 @@
 }
 
 #let conf(photo: "", name : "", medias: (), talents: (), tagline:[],  body: []) = {
-  set text(font_size, font: font)
+  set text(font: font, size: font_size)
   set page(
     margin: (x: 5em, y: 4em),
   )
@@ -154,7 +154,7 @@
   show heading.where(
     level: 2
   ) : it => block[
-    #set text(12pt, font: "Inria Serif")
+    #set text(font: font, weight: "bold", size: font_size + 2pt)
     #set align(left)
     #emph(it.body)
     #v(-10pt)
@@ -178,7 +178,7 @@
   
   [
     #v(1em)
-    tags: #tagline
+    #tagline
     \
     #body
   ]

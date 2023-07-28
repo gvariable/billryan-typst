@@ -30,8 +30,10 @@ see [`demo.pdf`](demo.pdf) for the pdf version.
 
 ## Todos
 - [x] Fix the bug of the progress bar.
-- [ ] Better documentation.
-- [ ] Add support for Chinese.
-- [ ] Refactor code.
+- [x] Better documentation.
+- [x] Add support for Chinese.
+- [x] Refactor code.
+- [ ] Chinese font.
+- [ ] Chinese version of readme. 
 - [ ] Add CI to prepare for the release.
 
