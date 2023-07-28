@@ -1,25 +1,34 @@
 #import "template.typ": *
 
 #show: doc => conf(
+    // Your personal photo.
     photo: "SpongeBob SquarePants.png",
+    // Your name.
     name: "gvariable",
-    services: (
+    // Information regarding your social media accounts.
+    // The "display" parameter is required, whereas the "link" parameter is optional.
+    medias: (
         (name: "github.svg", link: "https://github.com/gvariable", display: "github/gvariable"),
         (name: "envelope.svg", link: "gplhust@hust.edu.cn", display: "gplhust@hust.edu.cn"),
         (name: "square-phone.svg", display: "(+86)130-1111-4514"),
         (name: "linkedin.svg", link: "http://linkedin.cn/", display: "linkedin/gvariable"),
     ),
+    // The skills you possess.
     talents: (
         ("Python", 0.66),
         ("Rust", 0.73),
         ("C++", 0.85),
         ("Linux", 0.43),
     ),
+    // Job interests tags.
     tagline: [
         _Software engineering, Operating system, Compiler, Software testing and debugging._
     ],
+    // main body
     body: doc
 )
+
+// --------------------------- MAIN DOC BODY HERE --------------------------- //
 
 == #icon("graduation-cap.svg") EDUCATION
 / Huazhong University of Science and Technology\: : Undergraduate student.  #term("2019 - 2023", "Wuhan,China")

@@ -10,9 +10,10 @@
 #let font_size = 10pt;
 
 
-// document meta data
+// Add document specific meta data.
 #set document(title: "resume template", author: "gvariable")
 
+// Drawing a progress bar with different colors based on a ratio.
 #let progressbar(ratio, width: 120pt, height: 10pt, fg_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
     let fg = width * ratio;
     let bg = width - fg;
@@ -57,6 +58,7 @@
   h(3pt)
 }
 
+// Presenting skills and media details.
 #let meta(name, services, talents) = {
 
   set text(font_size)
@@ -134,7 +136,7 @@
 
 }
 
-#let conf(photo: "", name : "", services: (), talents: (), tagline:[],  body: []) = {
+#let conf(photo: "", name : "", medias: (), talents: (), tagline:[],  body: []) = {
   set text(font_size, font: font)
   set page(
     margin: (x: 5em, y: 4em),
@@ -170,7 +172,7 @@
   profile(
     photo: photo,
     name : name,
-    services: services,
+    services: medias,
     talents: talents
   )
   
