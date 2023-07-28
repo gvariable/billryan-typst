@@ -29,5 +29,9 @@ see [`demo.pdf`](demo.pdf) for the pdf version.
     ```
 
 ## Todos
-- [ ] Fix the bug of the progress bar.
+- [x] Fix the bug of the progress bar.
 - [ ] Better documentation.
+- [ ] Add support for Chinese.
+- [ ] Refactor code.
+- [ ] Add CI to prepare for the release.
+

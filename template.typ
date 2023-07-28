@@ -1,51 +1,50 @@
+#import "@preview/cetz:0.0.1"
+
 #let photo_scale = 5;
 #let photo_width = 295pt / photo_scale;
 #let photo_height = 413pt / photo_scale;
 #let bounding_box_height = 1.1em;
 #let box_shift = 1.5pt;
 #let image_path = "images/";
-#let body_text_font = "IBM Plex Sans";
-#let body_text_size = 10pt;
+#let font = "Times New Roman";
+#let font_size = 10pt;
 
 
 // document meta data
 #set document(title: "resume template", author: "gvariable")
 
-#let progressbar(rating, width: 120pt, height: 12pt, bar_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
-    let radius = height / 2;
-    let progress_width = width * rating;
-    let bg_width = width * (1 - rating);
-    let progress = rect(
-      width: progress_width,
-      height: height,
-      radius: (
-        top-left: radius,
-        bottom-left: radius
-      ),
-      fill: bar_color,
-      stroke: (
-        right: none,
-        rest: 1pt
-      )
+#let progressbar(ratio, width: 120pt, height: 10pt, fg_color: rgb("#9BFF93"), bg_color: rgb("#E2E2E2")) = {
+    let fg = width * ratio;
+    let bg = width - fg;
 
-    );
+    // the leading arc
+    let arc1 = cetz.canvas({
+        import cetz.draw: *
+        arc(
+            (0,0), start: 90deg, delta: 180deg, radius: height / 2, fill: if ratio == 0 { bg_color } else { fg_color }
+        )
+    }) 
+
+    // the ending arc
+    let arc2 = cetz.canvas({
+        import cetz.draw: *
+        arc(
+            (0,0), start: 270deg, delta: 180deg, radius: height / 2, fill: if ratio == 1 { fg_color } else { bg_color }
+        )
+    })
+
+    // frontground rectangle
+    let fg = rect(
+        width: fg, height: height, fill: rgb("#9BFF93"), stroke: (left: none, right: none, rest: 1pt)
+    )
+
+    // background rectangle
     let bg = rect(
-      width: bg_width,
-      height: height,
-      radius: (
-        top-right: radius,
-        bottom-right: radius
-      ),
-      fill: bg_color,
-      stroke: (
-        left: none,
-        rest: 1pt
-      )
+        width: bg, height: height, fill: bg_color, stroke: (left: none, right: none, rest: 1pt)
     )
-    stack(
-      dir: ltr,
-      progress, bg
-    )
+    
+    stack(dir: ltr, arc1, fg, bg, arc2)
+
 }
 
 
@@ -60,7 +59,7 @@
 
 #let meta(name, services, talents) = {
 
-  set text(10pt)
+  set text(font_size)
   let icon = icon.with(shift: -1pt)
   let progressbar = progressbar.with(width: bounding_box_height * 15, height: bounding_box_height)
   // skills
@@ -123,7 +122,7 @@
 }
 
 #let profile(photo: "", name: "", services:(), talents: ()) = {
-  set text(12pt, weight: "medium")
+  set text(font_size + 2pt, weight: "medium")
   set block(spacing: 1pt)
 
   grid(
@@ -136,7 +135,7 @@
 }
 
 #let conf(photo: "", name : "", services: (), talents: (), tagline:[],  body: []) = {
-  set text(body_text_size, font: body_text_font)
+  set text(font_size, font: font)
   set page(
     margin: (x: 5em, y: 4em),
   )
